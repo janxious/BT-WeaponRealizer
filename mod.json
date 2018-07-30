@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.0.1",
+  "Version": "0.0.3",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -13,6 +13,11 @@
   "ConflictsWith": [],
 
   "Settings": {
+    "simpleVariance": false,
+    "standardDeviationPercentOfSimpleVariance": 75,
+    
+    "overheatModifier": true,
+
     "debug": true
   }
 }
