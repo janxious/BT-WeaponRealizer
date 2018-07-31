@@ -8,18 +8,6 @@ using Harmony;
 
 namespace WeaponRealizer
 {
-    // TODO: Delete Me 
-    [HarmonyPatch(typeof(Weapon), "InitStats", new Type[] { })]
-    static class RolyPolyMakeMeRavioli
-    {
-        static void Postfix(Weapon __instance)
-        {
-            var sb = new StringBuilder();
-            sb.AppendFormat("weapon init: name {0} / {1} / {2} ", __instance.Name, __instance.weaponDef.OverheatedDamageMultiplier, __instance.StatCollection.GetValue<float>("OverheatedDamageMultiplier"));
-            Logger.Debug(sb.ToString());
-        }
-    }
-
     /// <summary>
     /// So we have some code like this:
     ///   float hitDamage = impactMessage.hitDamage;
@@ -41,7 +29,7 @@ namespace WeaponRealizer
                 instruction.opcode == OpCodes.Ldfld && instruction.operand == targetField 
             );
             var insertionIndex = targetFieldIndex - 1;
-            var calculatorMethod = AccessTools.Method(typeof(Calculator), "Calculate",
+            var calculatorMethod = AccessTools.Method(typeof(Calculator), "ApplyDamageModifiers",
                 new Type[] {typeof(AbstractActor), typeof(ICombatant), typeof(Weapon), typeof(float)});
 
             instructionsToInsert.Add(new CodeInstruction(OpCodes.Ldarg_0));                    // this

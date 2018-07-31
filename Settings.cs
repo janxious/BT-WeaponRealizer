@@ -11,6 +11,9 @@
         public bool overheatModifier = true;
         public bool OverheatModifier => overheatModifier;
 
+        public bool heatDamageModifier = true;
+        public bool HeatDamageModifier => heatDamageModifier;
+
         public bool debug = false;
     }
 }
