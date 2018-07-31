@@ -14,6 +14,9 @@
         public bool heatDamageModifier = true;
         public bool HeatDamageModifier => heatDamageModifier;
 
+        public bool ballisticNumberOfShots = true;
+        public bool BallisticNumberOfShots => ballisticNumberOfShots;
+
         public bool debug = false;
     }
 }

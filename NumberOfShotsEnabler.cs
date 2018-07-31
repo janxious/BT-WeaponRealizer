@@ -4,14 +4,11 @@ using Harmony;
 
 namespace WeaponRealizer
 {
-    // TODO: make it possible to disable this 
-
-    [HarmonyPatch(typeof(BallisticEffect), "Update")]
-    public static class BallisticEffect_Update_Patch
+    public static class NumberOfShotsEnabler
     {
         static readonly Dictionary<int, int> _shotCountHolder = new Dictionary<int, int>();
 
-        static void Prefix(BallisticEffect __instance)
+        static void BallisticEffectUpdatePrefix(BallisticEffect __instance)
         {
             if (__instance.currentState == WeaponEffect.WeaponEffectState.Complete) return;
             try
@@ -45,8 +42,7 @@ namespace WeaponRealizer
                 Logger.Debug($"hitIndex before: {hitIndex.GetValue<int>()}");
                 instance.Field("hitIndex").SetValue(_shotCountHolder[effectId] - 1);
                 Logger.Debug($"hitIndex after: {hitIndex.GetValue<int>()}");
-                var damage =
-                    ballisticEffect.weapon.DamagePerShotAdjusted(ballisticEffect.weapon.parent.occupiedDesignMask);
+                var damage = ballisticEffect.weapon.DamagePerShotAdjusted(ballisticEffect.weapon.parent.occupiedDesignMask);
                 if (_shotCountHolder[effectId] >= ballisticEffect.hitInfo.numberOfShots)
                 {
                     _shotCountHolder[effectId] = 1;
@@ -66,12 +62,8 @@ namespace WeaponRealizer
                 Logger.Error(e);
             }
         }
-    }
 
-    [HarmonyPatch(typeof(BallisticEffect), "OnComplete")]
-    public static class BallisticEffect_OnComplete_Patch
-    {
-        static void Prefix(BallisticEffect __instance, ref float __state)
+        static void BallisticEffectOnCompletePrefix(BallisticEffect __instance, ref float __state)
         {
             try
             {
@@ -86,7 +78,7 @@ namespace WeaponRealizer
             }
         }
 
-        static void Postfix(BallisticEffect __instance, float __state)
+        static void BallisticEffectOnCompletePostfix(BallisticEffect __instance, float __state)
         {
             try
             {

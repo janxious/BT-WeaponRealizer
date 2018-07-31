@@ -55,6 +55,7 @@
     <Compile Include="AttackSequencePatcher.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Core.Patches.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NumberOfShotsEnabler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

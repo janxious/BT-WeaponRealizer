@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace WeaponRealizer
 {
-    public static class Core
+    public static partial class Core
     {
         public const string ModName = "WeaponRealizer";
         public const string ModId   = "com.joelmeador.WeaponRealizer";
@@ -28,6 +28,7 @@ namespace WeaponRealizer
             HarmonyInstance.DEBUG = ModSettings.debug;
             var harmony = HarmonyInstance.Create(ModId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+            Patches.Apply(harmony);
         }
     }
 }
