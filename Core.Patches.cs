@@ -1,4 +1,5 @@
-﻿using Harmony;
+﻿using System;
+using Harmony;
 
 namespace WeaponRealizer
 {
@@ -13,14 +14,12 @@ namespace WeaponRealizer
                     harmony.Patch(
                         original: AccessTools.Method(typeof(BallisticEffect), "Update"),
                         prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectUpdatePrefix"),
-                        postfix: null,
-                        transpiler: null
+                        postfix: null
                     );
                     harmony.Patch(
-                        original: AccessTools.Method(typeof(BallisticEffect), "OmComplete"),
+                        original: AccessTools.Method(typeof(BallisticEffect), "OnComplete"),
                         prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectOnCompletePrefix"),
-                        postfix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectOnCompletePostfix"),
-                        transpiler: null
+                        postfix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectOnCompletePostfix")
                     );
                 }
             }

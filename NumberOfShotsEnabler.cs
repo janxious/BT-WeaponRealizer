@@ -19,12 +19,12 @@ namespace WeaponRealizer
 
                 var allBullets = instance.Method("AllBulletsComplete").GetValue<bool>();
 
-                if (ballisticEffect.currentState != WeaponEffect.WeaponEffectState.Complete &&
-                    _shotCountHolder.ContainsKey(effectId))
-                    Logger.Debug($"effectid: {effectId}\n" +
-                                 $"all bullets? {allBullets}\n" +
-                                 $"_shotCountHolder[effectId]: {_shotCountHolder[effectId]}\n" +
-                                 $"ballisticEffect.hitInfo.numberOfShots: {ballisticEffect.hitInfo.numberOfShots}");
+//                if (ballisticEffect.currentState != WeaponEffect.WeaponEffectState.Complete &&
+//                    _shotCountHolder.ContainsKey(effectId))
+//                    Logger.Debug($"effectid: {effectId}\n" +
+//                                 $"all bullets? {allBullets}\n" +
+//                                 $"_shotCountHolder[effectId]: {_shotCountHolder[effectId]}\n" +
+//                                 $"ballisticEffect.hitInfo.numberOfShots: {ballisticEffect.hitInfo.numberOfShots}");
 
 
                 if (!_shotCountHolder.ContainsKey(effectId))

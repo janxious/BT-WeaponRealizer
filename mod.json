@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.0.4",
+  "Version": "0.0.5",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -16,9 +16,20 @@
     "simpleVariance": false,
     "standardDeviationPercentOfSimpleVariance": 75,
     
-    "overheatModifier": true,
+    "overheatModifier": false,
 
-    "ballisticNumberOfShots": true,
+    "heatDamageAppliesToVehicleAsNormalDamage": true,
+    "heatDamagePercentApplicationToVehicle": 50,
+
+    "heatDamageAppliesToTurretAsNormalDamage": true,
+    "heatDamagePercentApplicationToTurret": 50,
+
+    "heatDamageAppliesToBuildingAsNormalDamage": true,
+    "heatDamagePercentApplicationToBuilding": 50,
+
+    "ballisticNumberOfShots": false,
+
+    "laserNumberOfShots": false,
 
     "debug": true
   }

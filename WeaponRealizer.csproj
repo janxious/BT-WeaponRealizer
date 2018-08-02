@@ -54,6 +54,11 @@
   <ItemGroup>
     <Compile Include="AttackSequencePatcher.cs" />
     <Compile Include="Calculator.cs" />
+    <Compile Include="Calculator.HeatAsNormalDamage.cs" />
+    <Compile Include="Calculator.HeatDamageModifier.cs" />
+    <Compile Include="Calculator.NormalDistribution.cs" />
+    <Compile Include="Calculator.OverheatMultiplier.cs" />
+    <Compile Include="Calculator.SimpleVariance.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Core.Patches.cs" />
     <Compile Include="Logger.cs" />
