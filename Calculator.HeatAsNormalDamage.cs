@@ -6,13 +6,12 @@ namespace WeaponRealizer
     {
         private static class HeatAsNormalDamage
         {
-            public static bool IsNotApplicable(Weapon weapon, ICombatant target)
+            public static bool IsApplicable(Weapon weapon)
             {
-                return !(Core.ModSettings.HeatDamageAppliesToBuildingAsNormalDamage ||
-                         Core.ModSettings.HeatDamageAppliesToVehicleAsNormalDamage ||
-                         Core.ModSettings.HeatDamageAppliesToTurretAsNormalDamage) ||
-                       weapon.HeatDamagePerShot < Epsilon;
-
+                return (Core.ModSettings.HeatDamageAppliesToBuildingAsNormalDamage ||
+                        Core.ModSettings.HeatDamageAppliesToVehicleAsNormalDamage ||
+                        Core.ModSettings.HeatDamageAppliesToTurretAsNormalDamage) &&
+                       weapon.HeatDamagePerShot > Epsilon;
             }
 
             public static float Calculate(ICombatant target, Weapon weapon, float currentDamage, float rawDamage)

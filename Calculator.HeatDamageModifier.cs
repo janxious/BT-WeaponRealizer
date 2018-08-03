@@ -6,10 +6,10 @@ namespace WeaponRealizer
     {
         private static class HeatDamageModifier
         {
-            public static bool IsNotApplicable(Weapon weapon)
+            public static bool IsApplicable(Weapon weapon)
             {
                 // TODO: need a mechanism for this to support multiplier on both sides of an attack
-                return true;
+                return false;
             }
         }
     }

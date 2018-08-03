@@ -9,10 +9,10 @@ namespace WeaponRealizer
         private static class DistanceBasedVariance
         {
             private const string DistanceVarianceTag = "WR-variance_by_distance";
-            public static bool IsNotApplicable(Weapon weapon)
+            public static bool IsApplicable(Weapon weapon)
             {
-                return !Core.ModSettings.DistanceBasedVariance ||
-                       !weapon.weaponDef.ComponentTags.Contains(DistanceVarianceTag);
+                return Core.ModSettings.DistanceBasedVariance &&
+                       weapon.weaponDef.ComponentTags.Contains(DistanceVarianceTag);
             }
 
             public static float Calculate(AbstractActor attacker, ICombatant target, Weapon weapon, float damage, float rawDamage)
@@ -28,7 +28,6 @@ namespace WeaponRealizer
                 var distanceBasedFunctionMultiplier = (float) Math.Atan(pi2 * (distanceRatio) + baseMultiplier);
                 if (distance < weapon.MaxRange)
                 {
-
                     varianceMultiplier = Mathf.Max(
                         baseMultiplier,
                         Mathf.Min(

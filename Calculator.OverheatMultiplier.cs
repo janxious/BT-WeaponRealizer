@@ -9,10 +9,10 @@ namespace WeaponRealizer
     {
         private static class OverheatMultiplier
         {
-            public static bool IsNotApplicable(Weapon weapon)
+            public static bool IsApplicable(Weapon weapon)
             {
-                return !Core.ModSettings.OverheatModifier ||
-                       Mathf.Abs(weapon.weaponDef.OverheatedDamageMultiplier) < Epsilon;
+                return Core.ModSettings.OverheatModifier &&
+                       Mathf.Abs(weapon.weaponDef.OverheatedDamageMultiplier) > Epsilon;
             }
 
             public static float Calculate(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)

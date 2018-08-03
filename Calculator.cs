@@ -8,41 +8,30 @@ namespace WeaponRealizer
 
         static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
         {
-            if (SimpleVariance.IsNotApplicable(weapon) &&
-                DistanceBasedVariance.IsNotApplicable(weapon) &&
-                OverheatMultiplier.IsNotApplicable(weapon) &&
-                HeatDamageModifier.IsNotApplicable(weapon) &&
-                HeatAsNormalDamage.IsNotApplicable(weapon, target))
-            {
-                return rawDamage;
-            }
-
             var damage = rawDamage;
 
-            if (Core.ModSettings.SimpleVariance)
+            if (SimpleVariance.IsApplicable(weapon))
             {
                 damage = SimpleVariance.Calculate(weapon, rawDamage);
             }
 
-            if (Core.ModSettings.DistanceBasedVariance)
+            if (DistanceBasedVariance.IsApplicable(weapon))
             {
                 damage = DistanceBasedVariance.Calculate(attacker, target, weapon, damage, rawDamage);
             }
 
-            if (Core.ModSettings.OverheatModifier)
+            if (OverheatMultiplier.IsApplicable(weapon))
             {
                 damage = OverheatMultiplier.Calculate(attacker, target, weapon, damage);
             }
 
-            if (Core.ModSettings.HeatDamageModifier)
+            if (HeatDamageModifier.IsApplicable(weapon))
             {
                 // TODO: this can't work becuse the values don't get ingested from weapondef
                 // damage = HeatDamageModifier.Calculate(weapon, damage);
             }
 
-            if (Core.ModSettings.HeatDamageAppliesToBuildingAsNormalDamage ||
-                Core.ModSettings.HeatDamageAppliesToTurretAsNormalDamage ||
-                Core.ModSettings.HeatDamageAppliesToVehicleAsNormalDamage)
+            if (HeatAsNormalDamage.IsApplicable(weapon))
             {
                 damage = HeatAsNormalDamage.Calculate(target, weapon, damage, rawDamage);
             }

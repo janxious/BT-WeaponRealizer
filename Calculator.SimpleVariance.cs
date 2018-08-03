@@ -7,10 +7,10 @@ namespace WeaponRealizer
     {
         private static class SimpleVariance
         {
-            public static bool IsNotApplicable(Weapon weapon)
+            public static bool IsApplicable(Weapon weapon)
             {
-                return !Core.ModSettings.SimpleVariance || 
-                       weapon.weaponDef.DamageVariance == 0;
+                return Core.ModSettings.SimpleVariance &&
+                       weapon.weaponDef.DamageVariance > 0;
             }
 
             public static float Calculate(Weapon weapon, float rawDamage)
