@@ -9,6 +9,7 @@ namespace WeaponRealizer
         static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
         {
             if (SimpleVariance.IsNotApplicable(weapon) &&
+                DistanceBasedVariance.IsNotApplicable(weapon) &&
                 OverheatMultiplier.IsNotApplicable(weapon) &&
                 HeatDamageModifier.IsNotApplicable(weapon) &&
                 HeatAsNormalDamage.IsNotApplicable(weapon, target))
@@ -21,6 +22,11 @@ namespace WeaponRealizer
             if (Core.ModSettings.SimpleVariance)
             {
                 damage = SimpleVariance.Calculate(weapon, rawDamage);
+            }
+
+            if (Core.ModSettings.DistanceBasedVariance)
+            {
+                damage = DistanceBasedVariance.Calculate(attacker, target, weapon, damage, rawDamage);
             }
 
             if (Core.ModSettings.OverheatModifier)

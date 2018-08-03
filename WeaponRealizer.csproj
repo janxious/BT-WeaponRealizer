@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AttackSequencePatcher.cs" />
     <Compile Include="Calculator.cs" />
+    <Compile Include="Calculator.DistanceBasedVariance.cs" />
     <Compile Include="Calculator.HeatAsNormalDamage.cs" />
     <Compile Include="Calculator.HeatDamageModifier.cs" />
     <Compile Include="Calculator.NormalDistribution.cs" />

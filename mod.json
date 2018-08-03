@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.1.0",
+  "Version": "0.1.1",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -16,6 +16,9 @@
     "simpleVariance": true,
     "standardDeviationPercentOfSimpleVariance": 75,
     
+    "distanceBasedVariance": true,
+    "distanceBasedVarianceMaxRangeDamagePercent": 10,
+
     "overheatModifier": true,
 
     "heatDamageModifier": false,

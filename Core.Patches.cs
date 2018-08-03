@@ -1,5 +1,4 @@
-﻿using System;
-using Harmony;
+﻿using Harmony;
 
 namespace WeaponRealizer
 {

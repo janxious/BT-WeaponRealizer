@@ -8,6 +8,12 @@
         public float standardDeviationPercentOfSimpleVariance = 75.0f;
         public float StandardDeviationSimpleVarianceMultiplier => standardDeviationPercentOfSimpleVariance / 100.0f;
 
+        public bool distanceBasedVariance = true;
+        public bool DistanceBasedVariance => distanceBasedVariance;
+
+        public float distanceBasedVarianceMaxRangeDamagePercent = 10.0f;
+        public float DistanceBasedVarianceMaxRangeDamageMultiplier => distanceBasedVarianceMaxRangeDamagePercent / 100.0f;
+
         public bool overheatModifier = true;
         public bool OverheatModifier => overheatModifier;
 
