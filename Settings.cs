@@ -23,13 +23,13 @@
         public bool heatDamageAppliesToTurretAsNormalDamage = true;
         public bool HeatDamageAppliesToTurretAsNormalDamage => heatDamageAppliesToTurretAsNormalDamage;
 
-        public float heatDamagePercentApplicationToTurret = 50f;
+        public float heatDamagePercentApplicationToTurret = 75f;
         public float HeatDamageApplicationToTurretMultiplier => heatDamagePercentApplicationToTurret / 100f;
 
         public bool heatDamageAppliesToBuildingAsNormalDamage = true;
         public bool HeatDamageAppliesToBuildingAsNormalDamage => heatDamageAppliesToBuildingAsNormalDamage;
 
-        public float heatDamagePercentApplicationToBuilding = 50f;
+        public float heatDamagePercentApplicationToBuilding = 150f;
         public float HeatDamageApplicationToBuildingMultiplier => heatDamagePercentApplicationToBuilding / 100f;
 
         public bool ballisticNumberOfShots = true;

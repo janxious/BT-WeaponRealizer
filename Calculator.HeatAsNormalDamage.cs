@@ -18,19 +18,19 @@ namespace WeaponRealizer
             public static float Calculate(ICombatant target, Weapon weapon, float currentDamage, float rawDamage)
             {
                 var damage = currentDamage;
-                if (Core.ModSettings.HeatDamageAppliesToBuildingAsNormalDamage && target is Building building)
+                if (Core.ModSettings.HeatDamageAppliesToBuildingAsNormalDamage && target is BattleTech.Building)
                 {
                     var damagePerShot = weapon.DamagePerShot;
                     var adjustment = rawDamage / damagePerShot * Core.ModSettings.HeatDamageApplicationToBuildingMultiplier;
                     damage = currentDamage + (adjustment * weapon.HeatDamagePerShot);
                 }
-                else if (Core.ModSettings.HeatDamageAppliesToVehicleAsNormalDamage && target is Vehicle vehicle)
+                else if (Core.ModSettings.HeatDamageAppliesToVehicleAsNormalDamage && target is Vehicle)
                 {
                     var damagePerShot = weapon.DamagePerShot;
                     var adjustment = rawDamage / damagePerShot * Core.ModSettings.HeatDamageApplicationToVehicleMultiplier;
                     damage = currentDamage + (adjustment * weapon.HeatDamagePerShot);
                 }
-                else if (Core.ModSettings.HeatDamageAppliesToTurretAsNormalDamage && target is Turret turret)
+                else if (Core.ModSettings.HeatDamageAppliesToTurretAsNormalDamage && target is Turret)
                 {
                     var damagePerShot = weapon.DamagePerShot;
                     var adjustment = rawDamage / damagePerShot * Core.ModSettings.HeatDamageApplicationToTurretMultiplier;

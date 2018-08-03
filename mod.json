@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.0.5",
+  "Version": "0.0.6",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -22,10 +22,10 @@
     "heatDamagePercentApplicationToVehicle": 50,
 
     "heatDamageAppliesToTurretAsNormalDamage": true,
-    "heatDamagePercentApplicationToTurret": 50,
+    "heatDamagePercentApplicationToTurret": 75,
 
     "heatDamageAppliesToBuildingAsNormalDamage": true,
-    "heatDamagePercentApplicationToBuilding": 50,
+    "heatDamagePercentApplicationToBuilding": 150,
 
     "ballisticNumberOfShots": false,
 
