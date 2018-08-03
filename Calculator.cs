@@ -6,7 +6,7 @@ namespace WeaponRealizer
     {
         private const float Epsilon = 0.0001f;
 
-        static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
+        internal static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
         {
             var damage = rawDamage;
 

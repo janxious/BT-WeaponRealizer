@@ -18,6 +18,7 @@ namespace WeaponRealizer
     [HarmonyPatch(typeof(AttackDirector.AttackSequence), "OnAttackSequenceImpact")]
     static class AttackSequencePatcher
     {
+        // ReSharper disable once UnusedMember.Local
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var instructionList = instructions.ToList();
@@ -28,7 +29,7 @@ namespace WeaponRealizer
                 instruction.opcode == OpCodes.Ldfld && instruction.operand == targetField 
             );
             var insertionIndex = targetFieldIndex - 1;
-            var calculatorMethod = AccessTools.Method(typeof(Calculator), "ApplyDamageModifiers",
+            var calculatorMethod = AccessTools.Method(typeof(Calculator), nameof(Calculator.ApplyDamageModifiers),
                 new Type[] {typeof(AbstractActor), typeof(ICombatant), typeof(Weapon), typeof(float)});
 
             instructionsToInsert.Add(new CodeInstruction(OpCodes.Ldarg_0));                    // this

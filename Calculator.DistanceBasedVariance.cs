@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace WeaponRealizer
 {
-    static partial class Calculator
+    internal static partial class Calculator
     {
         private static class DistanceBasedVariance
         {
             private const string DistanceVarianceTag = "WR-variance_by_distance";
+            private const double Pi2 = Math.PI / 2.0;
+
             public static bool IsApplicable(Weapon weapon)
             {
                 return Core.ModSettings.DistanceBasedVariance &&
@@ -22,10 +24,9 @@ namespace WeaponRealizer
                 var baseMultiplier = Core.ModSettings.DistanceBasedVarianceMaxRangeDamageMultiplier;
                 float varianceMultiplier;
                 var distance = Vector3.Distance(attacker.TargetPosition, target.TargetPosition);
-                var pi2 = Math.PI / 2.0f;
                 var distanceDifference = weapon.MaxRange - distance;
                 var distanceRatio = distanceDifference / weapon.MaxRange;
-                var distanceBasedFunctionMultiplier = (float) Math.Atan(pi2 * (distanceRatio) + baseMultiplier);
+                var distanceBasedFunctionMultiplier = (float) Math.Atan(Pi2 * (distanceRatio) + baseMultiplier);
                 if (distance < weapon.MaxRange)
                 {
                     varianceMultiplier = Mathf.Max(

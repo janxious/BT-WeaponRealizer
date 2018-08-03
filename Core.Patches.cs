@@ -13,13 +13,13 @@ namespace WeaponRealizer
                     Logger.Debug("Patching in Ballistic Number of Shots");
                     harmony.Patch(
                         original: AccessTools.Method(typeof(BallisticEffect), "Update"),
-                        prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectUpdatePrefix"),
+                        prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), nameof(NumberOfShotsEnabler.BallisticEffectUpdatePrefix)),
                         postfix: null
                     );
                     harmony.Patch(
                         original: AccessTools.Method(typeof(BallisticEffect), "OnComplete"),
-                        prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectOnCompletePrefix"),
-                        postfix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectOnCompletePostfix")
+                        prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), nameof(NumberOfShotsEnabler.BallisticEffectOnCompletePrefix)),
+                        postfix: new HarmonyMethod(typeof(NumberOfShotsEnabler), nameof(NumberOfShotsEnabler.BallisticEffectOnCompletePostfix))
                     );
                 }
             }

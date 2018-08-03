@@ -1,4 +1,8 @@
-﻿namespace WeaponRealizer
+﻿// ReSharper disable ConvertToConstant.Global
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable InconsistentNaming
+
+namespace WeaponRealizer
 {
     public class Settings
     {

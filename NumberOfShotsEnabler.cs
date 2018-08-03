@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Harmony;
 
 namespace WeaponRealizer
@@ -8,7 +9,8 @@ namespace WeaponRealizer
     {
         private static Dictionary<int, int> _shotCountHolder = new Dictionary<int, int>();
 
-        static void BallisticEffectUpdatePrefix(BallisticEffect __instance) {
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        internal static void BallisticEffectUpdatePrefix(BallisticEffect __instance) {
             try {
                 var ballisticEffect = __instance;
                 if (ballisticEffect.currentState == WeaponEffect.WeaponEffectState.Complete) return;
@@ -19,7 +21,7 @@ namespace WeaponRealizer
                 if (ballisticEffect.currentState != WeaponEffect.WeaponEffectState.WaitingForImpact || !allBullets) return;
 
                 var effectId = ballisticEffect.GetInstanceID();
-                if(!_shotCountHolder.ContainsKey(effectId))
+                if (!_shotCountHolder.ContainsKey(effectId))
                 {
                     _shotCountHolder[effectId] = 1;
                     Logger.Debug($"shotcount for effectId {effectId} added");
@@ -35,7 +37,11 @@ namespace WeaponRealizer
                 else {
                     _shotCountHolder[effectId]++;
                     instance.Method("OnImpact", new object[] {damage}).GetValue();
-                    ballisticEffect.Fire(ballisticEffect.hitInfo, 0, 0);
+                    ballisticEffect.Fire(
+                        hitInfo: ballisticEffect.hitInfo, 
+                        hitIndex: 0, 
+                        emitterIndex: 0
+                    );
                     Logger.Debug("effectId: " + effectId + " shotcount incremented to:" + _shotCountHolder[effectId]);
                 }
             }
@@ -44,7 +50,8 @@ namespace WeaponRealizer
             }
         }
 
-        static void BallisticEffectOnCompletePrefix(BallisticEffect __instance, ref float __state)
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        internal static void BallisticEffectOnCompletePrefix(BallisticEffect __instance, ref float __state)
         {
             try {
                 Logger.Debug("BallisticEffectOnCompletePrefix");
@@ -57,7 +64,8 @@ namespace WeaponRealizer
             }
         }
 
-        static void BallisticEffectOnCompletePostfix(BallisticEffect __instance, float __state)
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        internal static void BallisticEffectOnCompletePostfix(BallisticEffect __instance, float __state)
         {
             try
             {
