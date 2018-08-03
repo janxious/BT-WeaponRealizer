@@ -11,6 +11,7 @@ namespace WeaponRealizer
             {
                 if (ModSettings.BallisticNumberOfShots)
                 {
+                    Logger.Debug("Patching in Ballistic Number of Shots");
                     harmony.Patch(
                         original: AccessTools.Method(typeof(BallisticEffect), "Update"),
                         prefix: new HarmonyMethod(typeof(NumberOfShotsEnabler), "BallisticEffectUpdatePrefix"),
