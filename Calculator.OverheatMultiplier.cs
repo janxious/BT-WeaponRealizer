@@ -15,7 +15,7 @@ namespace WeaponRealizer
                        Mathf.Abs(weapon.weaponDef.OverheatedDamageMultiplier) < Epsilon;
             }
 
-            public static float Calculate(AbstractActor attacker, AbstractActor target, Weapon weapon, float rawDamage)
+            public static float Calculate(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
             {
                 var rawMultiplier = weapon.weaponDef.OverheatedDamageMultiplier;
                 var effectActor = rawMultiplier < 0 ? attacker : target;

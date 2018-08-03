@@ -25,7 +25,7 @@ namespace WeaponRealizer
 
             if (Core.ModSettings.OverheatModifier)
             {
-                damage = OverheatMultiplier.Calculate(attacker, target as AbstractActor, weapon, damage);
+                damage = OverheatMultiplier.Calculate(attacker, target, weapon, damage);
             }
 
             if (Core.ModSettings.HeatDamageModifier)
