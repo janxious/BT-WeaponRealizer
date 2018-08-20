@@ -4,7 +4,7 @@ namespace WeaponRealizer
 {
     public static partial class Core
     {
-        public static class Patches
+        internal static class Patches
         {
             public static void Apply(HarmonyInstance harmony)
             {

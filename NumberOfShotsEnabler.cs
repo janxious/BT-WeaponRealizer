@@ -10,7 +10,7 @@ namespace WeaponRealizer
         private static Dictionary<int, int> _shotCountHolder = new Dictionary<int, int>();
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        internal static void BallisticEffectUpdatePrefix(BallisticEffect __instance) {
+        internal static void BallisticEffectUpdatePrefix(BallisticEffect __instance, ref int ___hitIndex) {
             try {
                 var ballisticEffect = __instance;
                 if (ballisticEffect.currentState == WeaponEffect.WeaponEffectState.Complete) return;
@@ -27,22 +27,22 @@ namespace WeaponRealizer
                     Logger.Debug($"shotcount for effectId {effectId} added");
                 }
 
-                instance.Field("hitIndex").SetValue(_shotCountHolder[effectId] - 1);
+                ___hitIndex = _shotCountHolder[effectId] - 1;
                 var damage = ballisticEffect.weapon.DamagePerShotAdjusted(ballisticEffect.weapon.parent.occupiedDesignMask);
                 if (_shotCountHolder[effectId] >= ballisticEffect.hitInfo.numberOfShots) {
                     _shotCountHolder[effectId] = 1;
                     instance.Method("OnImpact", new object[] {damage}).GetValue();
-                    Logger.Debug("effectId: " + effectId + " shotcount reset");
+                    Logger.Debug($"effectId: {effectId} shotcount reset");
                 }
                 else {
                     _shotCountHolder[effectId]++;
                     instance.Method("OnImpact", new object[] {damage}).GetValue();
                     ballisticEffect.Fire(
                         hitInfo: ballisticEffect.hitInfo, 
-                        hitIndex: 0, 
+                        hitIndex: ___hitIndex, // TODO: setting this to zero acts as a sort of "super TAG"
                         emitterIndex: 0
                     );
-                    Logger.Debug("effectId: " + effectId + " shotcount incremented to:" + _shotCountHolder[effectId]);
+                    Logger.Debug($"effectId: {effectId} shotcount incremented to:{_shotCountHolder[effectId]}");
                 }
             }
             catch (Exception e) {
