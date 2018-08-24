@@ -22,6 +22,11 @@ namespace WeaponRealizer
                         postfix: new HarmonyMethod(typeof(NumberOfShotsEnabler), nameof(NumberOfShotsEnabler.BallisticEffectOnCompletePostfix))
                     );
                 }
+
+                if (ModSettings.LaserNumberOfShots)
+                {
+                    Logger.Debug("Patching in Laser Number of Shots");
+                }
             }
         }
     }
