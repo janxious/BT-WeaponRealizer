@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.1.5",
+  "Version": "0.2.0",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -36,6 +36,6 @@
 
     "laserNumberOfShots": false,
 
-    "debug": false
+    "debug": true
   }
 }
