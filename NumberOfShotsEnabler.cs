@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Reflection.Emit;
 using Harmony;
 
@@ -8,7 +9,8 @@ namespace WeaponRealizer
     [HarmonyPatch(new Type[] {})]
     static class BallisticEffectOnCompleteMultifirePatch
     {
-        private static Action<BallisticEffect> WeaponEffectOnComplete;
+        private static Action<BallisticEffect> WeaponEffect_OnComplete;
+        private static FastInvokeHandler BallisticEffect_OnImpact;
         public static bool Prepare()
         {
             if (!Core.ModSettings.BallisticNumberOfShots) return false;
@@ -20,19 +22,19 @@ namespace WeaponRealizer
             gen.Emit(OpCodes.Ldarg_0);
             gen.Emit(OpCodes.Call, method);
             gen.Emit(OpCodes.Ret);
-            WeaponEffectOnComplete = (Action<BallisticEffect>) dm.CreateDelegate(typeof(Action<BallisticEffect>));
+            WeaponEffect_OnComplete = (Action<BallisticEffect>) dm.CreateDelegate(typeof(Action<BallisticEffect>));
+            var mi = AccessTools.Method(typeof(BallisticEffect), "OnImpact", new Type[] {typeof(float)});
+            BallisticEffect_OnImpact = MethodInvoker.GetHandler(mi);
             return true;
         }
 
         static bool Prefix(ref int ___hitIndex, BallisticEffect __instance)
         {
             var damage = __instance.weapon.DamagePerShotAdjusted(__instance.weapon.parent.occupiedDesignMask);
-            var magi = Traverse.Create(__instance);
-            magi.Method("OnImpact", new object[] {damage}).GetValue();
-
+            BallisticEffect_OnImpact.Invoke(__instance, new object[] {damage});
             if (___hitIndex >= __instance.hitInfo.numberOfShots - 1)
             {
-                WeaponEffectOnComplete(__instance);
+                WeaponEffect_OnComplete(__instance);
                 return false;
             }
 
