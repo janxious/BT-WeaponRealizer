@@ -1,97 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Emit;
 using Harmony;
 
 namespace WeaponRealizer
 {
-    public static class NumberOfShotsEnabler
+    [HarmonyPatch(typeof(BallisticEffect), "OnComplete", MethodType.Normal)]
+    [HarmonyPatch(new Type[] {})]
+    static class BallisticEffectOnCompleteMultifirePatch
     {
-        private static Dictionary<int, int> _shotCountHolder = new Dictionary<int, int>();
-
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        internal static void BallisticEffectUpdatePrefix(BallisticEffect __instance, ref int ___hitIndex) {
-            try {
-                var ballisticEffect = __instance;
-                if (ballisticEffect.currentState == WeaponEffect.WeaponEffectState.Complete) return;
-
-                var instance = Traverse.Create(ballisticEffect);
-                var allBullets = instance.Method("AllBulletsComplete").GetValue<bool>();
-
-                if (ballisticEffect.currentState != WeaponEffect.WeaponEffectState.WaitingForImpact || !allBullets) return;
-
-                var effectId = ballisticEffect.GetInstanceID();
-                if (!_shotCountHolder.ContainsKey(effectId))
-                {
-                    _shotCountHolder[effectId] = 1;
-                    Logger.Debug($"shotcount for effectId {effectId} added");
-                }
-
-                ___hitIndex = _shotCountHolder[effectId] - 1;
-                var damage = ballisticEffect.weapon.DamagePerShotAdjusted(ballisticEffect.weapon.parent.occupiedDesignMask);
-                if (_shotCountHolder[effectId] >= ballisticEffect.hitInfo.numberOfShots) {
-                    _shotCountHolder[effectId] = 1;
-                    instance.Method("OnImpact", new object[] {damage}).GetValue();
-                    Logger.Debug($"effectId: {effectId} shotcount reset");
-                }
-                else {
-                    _shotCountHolder[effectId]++;
-                    instance.Method("OnImpact", new object[] {damage}).GetValue();
-                    ballisticEffect.Fire(
-                        hitInfo: ballisticEffect.hitInfo, 
-                        hitIndex: ___hitIndex, // TODO: setting this to zero acts as a sort of "super TAG"
-                        emitterIndex: 0
-                    );
-                    Logger.Debug($"effectId: {effectId} shotcount incremented to:{_shotCountHolder[effectId]}");
-                }
-            }
-            catch (Exception e) {
-                Logger.Error(e);
-            }
+        private static Action<BallisticEffect> WeaponEffectOnComplete;
+        public static bool Prepare()
+        {
+            if (!Core.ModSettings.BallisticNumberOfShots) return false;
+            // build a call to WeaponEffect.OnComplete() so it can be called
+            // a la base.OnComplete() from the context of a BallisticEffect
+            var method = typeof(WeaponEffect).GetMethod("OnComplete", AccessTools.all);
+            var dm = new DynamicMethod("WeaponEffectOnComplete", null, new Type[] {typeof(BallisticEffect)}, typeof(BallisticEffect));
+            var gen = dm.GetILGenerator();
+            gen.Emit(OpCodes.Ldarg_0);
+            gen.Emit(OpCodes.Call, method);
+            gen.Emit(OpCodes.Ret);
+            WeaponEffectOnComplete = (Action<BallisticEffect>) dm.CreateDelegate(typeof(Action<BallisticEffect>));
+            return true;
         }
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        internal static void BallisticEffectOnCompletePrefix(BallisticEffect __instance, ref float __state)
+        static bool Prefix(ref int ___hitIndex, BallisticEffect __instance)
         {
-            try {
-                Logger.Debug("BallisticEffectOnCompletePrefix");
-                var weapon = __instance.weapon;
-                __state = weapon.DamagePerShot;
-                weapon.StatCollection.Set<float>("DamagePerShot", 0);
-            }
-            catch (Exception e) {
-                Logger.Error(e);
-            }
-        }
+            var damage = __instance.weapon.DamagePerShotAdjusted(__instance.weapon.parent.occupiedDesignMask);
+            var magi = Traverse.Create(__instance);
+            magi.Method("OnImpact", new object[] {damage}).GetValue();
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        internal static void BallisticEffectOnCompletePostfix(BallisticEffect __instance, float __state)
-        {
-            try
+            if (___hitIndex >= __instance.hitInfo.numberOfShots - 1)
             {
-                Logger.Debug("BallisticEffectOnCompletePostfix");
-                __instance.weapon.StatCollection.Set("DamagePerShot", __state);
+                WeaponEffectOnComplete(__instance);
+                return false;
             }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-            }
+
+            ___hitIndex++;
+            __instance.Fire(__instance.hitInfo, ___hitIndex, 0);
+            return false;
         }
     }
 
     [HarmonyPatch(typeof(LaserEffect), "OnComplete", MethodType.Normal)]
     [HarmonyPatch(new Type[] {})]
-    static class LaserEffectOnCompleteHogWash
+    static class LaserEffectOnCompleteMultifirePatch
     {
+        public static bool Prepare()
+        {
+            return Core.ModSettings.LaserNumberOfShots;
+        }
+
         static void Postfix(ref int ___hitIndex, LaserEffect __instance)
         {
-            if (___hitIndex > __instance.hitInfo.numberOfShots - 1) return;
+            if (___hitIndex >= __instance.hitInfo.numberOfShots - 1) return;
             ___hitIndex++;
             __instance.Fire(__instance.hitInfo, ___hitIndex);
         }
     }
-    
-    // patching weapon representation to call fire 3 times doesn't work
+
+
+    // HAHA: patching a shot right into the end of Update didn't work
+    // HAHA: patching weapon representation to call fire 3 times doesn't work
     
     // how-to?
     // if the laser has 1 shot, don't prefix shit

@@ -34,8 +34,8 @@
 
     "ballisticNumberOfShots": true,
 
-    "laserNumberOfShots": false,
+    "laserNumberOfShots": true,
 
-    "debug": true
+    "debug": false
   }
 }
