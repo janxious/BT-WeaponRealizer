@@ -8,9 +8,14 @@ namespace WeaponRealizer
 
         internal static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
         {
+            return ApplyAllDamageModifiers(attacker, target, weapon, rawDamage, true);
+        }
+
+        internal static float ApplyAllDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage, bool random)
+        {
             var damage = rawDamage;
 
-            if (SimpleVariance.IsApplicable(weapon))
+            if (random && SimpleVariance.IsApplicable(weapon))
             {
                 damage = SimpleVariance.Calculate(weapon, rawDamage);
             }
