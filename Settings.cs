@@ -45,7 +45,10 @@ namespace WeaponRealizer
         public bool ballisticNumberOfShots = true;
         public bool BallisticNumberOfShots => ballisticNumberOfShots;
 
-        public bool laserNumberOfShots = false;
+        public bool clusteredBallistics = true;
+        public bool ClusteredBallistics => clusteredBallistics;
+
+        public bool laserNumberOfShots = true;
         public bool LaserNumberOfShots => laserNumberOfShots;
 
         public bool debug = false;

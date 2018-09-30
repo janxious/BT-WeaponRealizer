@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.2.0",
+  "Version": "0.3.0",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -33,6 +33,7 @@
     "heatDamagePercentApplicationToBuilding": 150,
 
     "ballisticNumberOfShots": true,
+    "clusteredBallistics": true,
 
     "laserNumberOfShots": true,
 
