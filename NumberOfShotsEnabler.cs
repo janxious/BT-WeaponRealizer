@@ -55,15 +55,18 @@ namespace WeaponRealizer
             }
 
             ___hitIndex++;
-            if (ShouldFire(__instance))
+            if (ShouldFire(__instance, ___hitIndex))
+            {
                 __instance.Fire(__instance.hitInfo, ___hitIndex, 0);
+            }
             return false;
         }
 
         // we only fire when multishot ballistics are enabled and we're not in clustered mode
-        private static bool ShouldFire(BallisticEffect effect)
+        private static bool ShouldFire(BallisticEffect effect, int hitIndex)
         {
-            return Core.ModSettings.BallisticNumberOfShots && !IsClustered(effect);
+            return Core.ModSettings.BallisticNumberOfShots &&
+                   hitIndex % effect.weapon.ProjectilesPerShot == 0;
         }
 
         private static readonly Dictionary<int, bool> _isClustered = new Dictionary<int, bool>();

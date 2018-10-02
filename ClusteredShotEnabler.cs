@@ -1,11 +1,47 @@
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 using UnityEngine;
 
 namespace WeaponRealizer
 {
+    [HarmonyPatch(typeof(AttackDirector.AttackSequence), "GenerateRandomCache")]
+    static class ClusteredShotRandomCacheEnabler
+    {
+        static bool Prepare()
+        {
+            return Core.ModSettings.ClusteredBallistics;
+        }
+
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var targetPropertyGetter = AccessTools.Property(typeof(Weapon), "ShotsWhenFired").GetGetMethod();
+            var replacementMethod = AccessTools.Method(typeof(ClusteredShotRandomCacheEnabler),
+                nameof(ShotsWhenFiredRandomizerOverider));
+            return Transpilers.MethodReplacer(instructions, targetPropertyGetter, replacementMethod);
+        }
+
+        private static int ShotsWhenFiredRandomizerOverider(Weapon weapon)
+        {
+            if (!IsClustered(weapon)) return weapon.ShotsWhenFired;
+            return weapon.ShotsWhenFired * weapon.ProjectilesPerShot;
+        }
+
+        private static readonly Dictionary<string, bool> _isClustered = new Dictionary<string, bool>();
+        private static bool IsClustered(Weapon weapon)
+        {
+            var weaponId = weapon.defId;
+            if (!_isClustered.ContainsKey(weaponId))
+            {
+                _isClustered[weaponId] =
+                    Core.ModSettings.ClusteredBallistics &&
+                    weapon.weaponDef.ComponentTags.Contains(ClusteredShotEnabler.CLUSTER_TAG);
+            }
+            return _isClustered[weaponId];
+        }
+    }
+
     [HarmonyPatch(typeof(AttackDirector.AttackSequence), "GetIndividualHits")]
     static class ClusteredShotEnabler
     {
@@ -30,7 +66,7 @@ namespace WeaponRealizer
         {
             if (!weapon.weaponDef.ComponentTags.Contains(CLUSTER_TAG)) return true;
             Logger.Debug("had the cluster tag");
-            var newNumberOfShots = weapon.ProjectilesPerShot;
+            var newNumberOfShots = weapon.ProjectilesPerShot * hitInfo.numberOfShots;
             var originalNumberOfShots = hitInfo.numberOfShots;
             hitInfo.numberOfShots = newNumberOfShots;
             hitInfo.toHitRolls = new float[newNumberOfShots];
@@ -45,9 +81,9 @@ namespace WeaponRealizer
                 __instance,
                 new object[] {hitInfo, groupIdx, weaponIdx, weapon, toHitChance, prevDodgedDamage}
             );
-            hitInfo.numberOfShots = originalNumberOfShots;
 
             PrintHitLocations(hitInfo);
+            hitInfo.numberOfShots = originalNumberOfShots;
             return false;
         }
 
