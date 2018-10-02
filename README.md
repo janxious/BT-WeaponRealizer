@@ -7,7 +7,7 @@ This supercedes my previous mod [Weapon Variance](https://github.com/janxious/BT
 ## Features
 
 * Multishot Ballistics - see `ShotsWhenFired` in def
-* Clustered fire ballistics (LBX) - this is based on having a tag `wr-clustered_shots`, and will fire a cluster of size `ProjectilesWhenFired` from weapon def
+* Clustered fire ballistics (LBX) - this is based on having a tag `wr-clustered_shots`, and will fire a cluster of size `ProjectilesPerShot` from weapon def
 * Multishot Lasers - see `ShotsWhenFired` in def
 * Damage variance +/- around specified damage - see `DamageVariance` in def
 * Increased damage done when overheated - see `OverheatedDamageMultiplier` in def
