@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.3.1",
+  "Version": "0.4.0",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -37,6 +37,11 @@
 
     "laserNumberOfShots": true,
 
-    "debug": false
+    "weaponJams": true,
+
+    "damageAltersWeaponRefireModifier": true,
+    "damagedWeaponRefireModifierMultiplier": 1.5,
+
+    "debug": true
   }
 }

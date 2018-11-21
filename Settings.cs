@@ -51,6 +51,12 @@ namespace WeaponRealizer
         public bool laserNumberOfShots = true;
         public bool LaserNumberOfShots => laserNumberOfShots;
 
+        public bool damageAltersWeaponRefireModifier = true;
+        public bool DamageAltersWeaponRefireModifier => damageAltersWeaponRefireModifier;
+
+        public float damagedWeaponRefireModifierMultiplier = 1.5f;
+        public float DamagedWeaponRefireModifierMultiplier => damagedWeaponRefireModifierMultiplier;
+
         public bool debug = false;
     }
 }
