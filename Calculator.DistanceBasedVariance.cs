@@ -63,18 +63,18 @@ namespace WeaponRealizer
                 return VarianceMultipliers[weapon.defId] > Epsilon;
             }
 
-            private const string DistanceVarianceTagPrefix = "WR-variance_by_distance";
+            private const string DistanceVarianceTagPrefix = "wr-variance_by_distance";
             private static readonly char[] TagDelimiter = new char[] {'-'};
             private static float ParseBaseMultiplier(Weapon weapon)
             {
-                if (!weapon.weaponDef.ComponentTags.Any(tag => tag.StartsWith(DistanceVarianceTagPrefix)))
+                if (!weapon.weaponDef.ComponentTags.Any(tag => tag.StartsWith(DistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase)))
                     return 0.0f;
-                var rawTag = weapon.weaponDef.ComponentTags.First(tag => tag.StartsWith(DistanceVarianceTagPrefix));
-                var baseMultiplier =
+                var rawTag = weapon.weaponDef.ComponentTags.First(tag => tag.StartsWith(DistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase));
+                var multiplier =
                     rawTag == DistanceVarianceTagPrefix
                         ? Core.ModSettings.DistanceBasedVarianceMaxRangeDamageMultiplier
                         : float.Parse(rawTag.Split(TagDelimiter, 3).Last()) / 100.0f;
-                return baseMultiplier;
+                return multiplier;
             }
         }
     }
