@@ -66,6 +66,7 @@
     <Compile Include="Core.cs" />
     <Compile Include="Core.Patches.cs" />
     <Compile Include="DamageAltersWeaponRefireModifier.cs" />
+    <Compile Include="JammingEnabler.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NumberOfShotsEnabler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -42,6 +42,9 @@
     "damageAltersWeaponRefireModifier": true,
     "damagedWeaponRefireModifierMultiplier": 1.5,
 
-    "debug": true
+    "jamming": true,
+    "jamChanceMultiplier": 1.0,
+
+    "debug": false
   }
 }

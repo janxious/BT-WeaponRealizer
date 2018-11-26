@@ -57,6 +57,12 @@ namespace WeaponRealizer
         public float damagedWeaponRefireModifierMultiplier = 1.5f;
         public float DamagedWeaponRefireModifierMultiplier => damagedWeaponRefireModifierMultiplier;
 
+        public bool jamming = true;
+        public bool Jamming => jamming;
+
+        public float jamChanceMultiplier = 1;
+        public float JamChanceMultiplier => jamChanceMultiplier;
+
         public bool debug = false;
     }
 }

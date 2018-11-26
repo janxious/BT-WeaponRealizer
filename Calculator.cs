@@ -4,7 +4,7 @@ namespace WeaponRealizer
 {
     static partial class Calculator
     {
-        private const float Epsilon = 0.0001f;
+        internal const float Epsilon = 0.0001f;
 
         internal static float ApplyDamageModifiers(AbstractActor attacker, ICombatant target, Weapon weapon, float rawDamage)
         {
