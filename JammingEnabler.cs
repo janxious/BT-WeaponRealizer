@@ -5,6 +5,7 @@ using System.Text;
 using BattleTech;
 using Harmony;
 using Localize;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace WeaponRealizer
@@ -104,17 +105,35 @@ namespace WeaponRealizer
         }
 
         private const string TemporarilyDisabledStatisticName = "TemporarilyDisabled";
+        private const string DamageableWeaponTag = "wr-damage_when_jam";
         internal const string JammedWeaponStatisticName = "WR-JammedWeapon";
         private const string JammableWeaponTag = "wr-jammable_weapon";
 
         private static void AddJam(AbstractActor actor, Weapon weapon)
         {
-            weapon.StatCollection.Set<bool>(JammedWeaponStatisticName, true);
-            weapon.StatCollection.Set<bool>(TemporarilyDisabledStatisticName, true);
-            actor.Combat.MessageCenter.PublishMessage(
-                new AddSequenceToStackMessage(
-                    new ShowActorInfoSequence(actor, $"{weapon.Name} Jammed!", FloatieMessage.MessageNature.Debuff,
-                        true)));
+            if (!DamagesWhenJams(weapon))
+            {
+                weapon.StatCollection.Set<bool>(JammedWeaponStatisticName, true);
+                weapon.StatCollection.Set<bool>(TemporarilyDisabledStatisticName, true);
+                actor.Combat.MessageCenter.PublishMessage(
+                    new AddSequenceToStackMessage(
+                        new ShowActorInfoSequence(actor, $"{weapon.Name} Jammed!", FloatieMessage.MessageNature.Debuff,
+                            true)));
+            }
+            else
+            {
+                var isDestroying = weapon.DamageLevel != ComponentDamageLevel.Functional;
+                var damageLevel = isDestroying ? ComponentDamageLevel.Destroyed : ComponentDamageLevel.Penalized;
+                var fakeHit = new WeaponHitInfo(-1, -1, -1, -1, string.Empty, string.Empty, -1, null, null, null, null, null, null, null, AttackDirection.None, Vector2.zero, null);
+                weapon.DamageComponent(fakeHit, damageLevel, true);
+                var message = isDestroying
+                    ? $"{weapon.Name} misfire: Destroyed!"
+                    : $"{weapon.Name} misfire: Damaged!";
+                actor.Combat.MessageCenter.PublishMessage(
+                    new AddSequenceToStackMessage(
+                        new ShowActorInfoSequence(actor, message, FloatieMessage.MessageNature.Debuff, true)));
+            }
+
         }
 
         private static void RemoveJam(AbstractActor actor, Weapon weapon)
@@ -146,6 +165,11 @@ namespace WeaponRealizer
             if (!JamMultipliers.ContainsKey(weapon.defId))
                 JamMultipliers[weapon.defId] = ParseBaseMultiplier(weapon);
             return JamMultipliers[weapon.defId] > Calculator.Epsilon;
+        }
+
+        private static bool DamagesWhenJams(Weapon weapon)
+        {
+            return weapon.weaponDef.ComponentTags.Contains(DamageableWeaponTag);
         }
 
         private const string JamMultiplierTagPrefix = "wr-jam_chance_multiplier";
