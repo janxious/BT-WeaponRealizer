@@ -96,12 +96,12 @@ namespace WeaponRealizer
             if (skill >= mitigationRoll)
             {
                 Logger.Debug(sb.ToString());
-                return false;
+                RemoveJam(actor, weapon);
+                return true;
             }
 
             Logger.Debug(sb.ToString());
-            RemoveJam(actor, weapon);
-            return true;
+            return false;
         }
 
         private const string TemporarilyDisabledStatisticName = "TemporarilyDisabled";
