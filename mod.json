@@ -37,8 +37,6 @@
 
     "laserNumberOfShots": true,
 
-    "weaponJams": true,
-
     "damageAltersWeaponRefireModifier": true,
     "damagedWeaponRefireModifierMultiplier": 1.5,
 
