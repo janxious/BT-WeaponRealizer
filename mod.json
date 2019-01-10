@@ -19,6 +19,9 @@
     "distanceBasedVariance": true,
     "distanceBasedVarianceMaxRangeDamagePercent": 10,
 
+    "reverseDistanceBasedVariance": true,
+    "reverseDistanceBasedVarianceMaxRangeDamagePercent": 10,
+
     "overheatModifier": true,
 
     "heatDamageModifier": false,
@@ -42,7 +45,11 @@
 
     "jamming": true,
     "jamChanceMultiplier": 1.0,
+    "jammingMessages": {
+      "default": ["% Jammed", "% Unjammed"],
+      "gaussyGunGun": ["%: Current Destabilized", "%: Current Stabilized"]
+    },
 
-    "debug": false
+    "debug": true
   }
 }
