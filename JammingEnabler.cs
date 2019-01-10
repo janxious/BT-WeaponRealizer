@@ -57,6 +57,7 @@ namespace WeaponRealizer
 
         private static bool AttemptToAddJam(AbstractActor actor, Weapon weapon)
         {
+            // TODO: can we exponentially increase refiremodifier?
             var refireModifier = weapon.RefireModifier;
             var roll = Random.Range(1, 100);
             var skill = actor.SkillGunnery;
