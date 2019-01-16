@@ -25,6 +25,11 @@ namespace WeaponRealizer
                 damage = DistanceBasedVariance.Calculate(attacker, target, weapon, damage, rawDamage);
             }
 
+            if (ReverseDistanceBasedVariance.IsApplicable(weapon))
+            {
+                damage = ReverseDistanceBasedVariance.Calculate(attacker, target, weapon, damage, rawDamage);
+            }
+
             if (OverheatMultiplier.IsApplicable(weapon))
             {
                 damage = OverheatMultiplier.Calculate(attacker, target, weapon, damage);

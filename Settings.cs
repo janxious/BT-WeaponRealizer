@@ -18,6 +18,12 @@ namespace WeaponRealizer
         public float distanceBasedVarianceMaxRangeDamagePercent = 10.0f;
         public float DistanceBasedVarianceMaxRangeDamageMultiplier => distanceBasedVarianceMaxRangeDamagePercent / 100.0f;
 
+        public bool reverseDistanceBasedVariance = true;
+        public bool ReverseDistanceBasedVariance => reverseDistanceBasedVariance;
+
+        public float reverseDistanceBasedVarianceMinRangeDamagePercent = 10.0f;
+        public float ReverseDistanceBasedVarianceMinRangeDamageMultiplier => reverseDistanceBasedVarianceMinRangeDamagePercent / 100.0f;
+ 
         public bool overheatModifier = true;
         public bool OverheatModifier => overheatModifier;
 

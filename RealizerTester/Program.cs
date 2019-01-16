@@ -10,20 +10,21 @@ namespace RealizerTester
         {
             var damage = 50f;
             var damagePerShot = 50f;
-            var adjustment = damage/damagePerShot;
+            var adjustment = damage / damagePerShot;
             float varianceMultiplier = 0f;
             var maxRange = 120f;
+            var minRange = 30f;
             var floor = 10f;
-            Console.WriteLine($"Computing for weapon with {damage} damage and a max range of {maxRange} and a floor of {floor}%");
+            Console.WriteLine($"Computing for e-lrm weapon with {damage} damage and a max range of {maxRange} and a floor of {floor}%");
             Console.WriteLine();
             Console.WriteLine($"Distance to target | ComputedDamage");
             Console.WriteLine($"-----------------------------------");
             for (var distance = 0f; distance <= maxRange; distance += 1f)
             {
                 var distanceDifference = maxRange - distance;
-                var distanceRatio = distanceDifference / maxRange;
+                var distanceRatio = distanceDifference / minRange;
                 var baseMultiplier = floor / 100f; // the tag
-                var distanceBasedFunctionMultiplier = (float) Math.Atan(Pi2 * distanceRatio + baseMultiplier);
+                var distanceBasedFunctionMultiplier = (float) Math.Atan(1f / (Pi2 * distanceRatio + baseMultiplier));
                 if (distance <= maxRange)
                 {
                     varianceMultiplier = Mathf.Max(
