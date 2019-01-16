@@ -77,7 +77,7 @@ namespace WeaponRealizer
                 return multiplier;
             }
         }
-        
+
         private static class ReverseDistanceBasedVariance
         {
             public static bool IsApplicable(Weapon weapon)

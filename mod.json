@@ -2,7 +2,7 @@
   "Name": "WeaponRealizer",
   "Enabled": true,
 
-  "Version": "0.4.1",
+  "Version": "0.5.0",
 
   "Author": "janxious",
   "Website": "https://github.com/janxious/WeaponRealizer",
@@ -45,10 +45,6 @@
 
     "jamming": true,
     "jamChanceMultiplier": 1.0,
-    "jammingMessages": {
-      "default": ["% Jammed", "% Unjammed"],
-      "gaussyGunGun": ["%: Current Destabilized", "%: Current Stabilized"]
-    },
 
     "debug": true
   }

@@ -55,10 +55,21 @@ namespace WeaponRealizer
             }
         }
 
+        private static float GetRefireModifier(Weapon weapon)
+        {
+            if (weapon.RefireModifier > 0 && weapon.roundsSinceLastFire < 2)
+                return (float) weapon.RefireModifier;
+            return 0.0f;
+        }
+
         private static bool AttemptToAddJam(AbstractActor actor, Weapon weapon)
         {
             // TODO: can we exponentially increase refiremodifier?
-            var refireModifier = weapon.RefireModifier;
+            // LadyAlekto: every turn fired, the refiremodifier gets added
+            // LadyAlekto: either as toggle or global
+            // LadyAlekto: and when you brace a turn, it resets
+            // LadyAlekto: brace as in "dont shoot"
+            var refireModifier = GetRefireModifier(weapon);
             var roll = Random.Range(1, 100);
             var skill = actor.SkillGunnery;
             var mitigationRoll = Random.Range(2, 11);
