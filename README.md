@@ -1,5 +1,11 @@
 # BT-WeaponRealizer
 
+## Download
+
+Get the latest version from [https://github.com/janxious/BT-WeaponRealizer/releases](https://github.com/janxious/BT-WeaponRealizer/releases). **Do not** click the source code links.
+
+## What is this?
+
 Battletech:Game Mod - experiments in restoring lost functions to weapons, and adding new ones.
 
 This supercedes my previous mod [Weapon Variance](https://github.com/janxious/BT-WeaponVariance)
