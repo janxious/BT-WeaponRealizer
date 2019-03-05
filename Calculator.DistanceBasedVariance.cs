@@ -71,7 +71,7 @@ namespace WeaponRealizer
                     return 0.0f;
                 var rawTag = weapon.weaponDef.ComponentTags.First(tag => tag.StartsWith(DistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase));
                 var multiplier =
-                    rawTag == DistanceVarianceTagPrefix
+                    rawTag.Equals(DistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase)
                         ? Core.ModSettings.DistanceBasedVarianceMaxRangeDamageMultiplier
                         : float.Parse(rawTag.Split(TagDelimiter, 3).Last()) / 100.0f;
                 return multiplier;
@@ -146,7 +146,7 @@ namespace WeaponRealizer
                     return 0.0f;
                 var rawTag = weapon.weaponDef.ComponentTags.First(tag => tag.StartsWith(ReverseDistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase));
                 var multiplier =
-                    rawTag == ReverseDistanceVarianceTagPrefix
+                    rawTag.Equals(ReverseDistanceVarianceTagPrefix, StringComparison.InvariantCultureIgnoreCase)
                         ? Core.ModSettings.ReverseDistanceBasedVarianceMinRangeDamageMultiplier
                         : float.Parse(rawTag.Split(TagDelimiter, 3).Last()) / 100.0f;
                 return multiplier;

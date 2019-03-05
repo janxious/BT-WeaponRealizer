@@ -167,7 +167,8 @@ namespace WeaponRealizer
 
         private static bool IsJammable(Weapon weapon)
         {
-            return weapon.weaponDef.ComponentTags.Contains(JammableWeaponTag) && HasJamMultiplier(weapon);
+            return weapon.weaponDef.ComponentTags.Contains(JammableWeaponTag, StringComparer.InvariantCultureIgnoreCase)
+                && HasJamMultiplier(weapon);
         }
 
         private static readonly Dictionary<string, float> JamMultipliers = new Dictionary<string, float>();
@@ -181,7 +182,7 @@ namespace WeaponRealizer
 
         private static bool DamagesWhenJams(Weapon weapon)
         {
-            return weapon.weaponDef.ComponentTags.Contains(DamageableWeaponTag);
+            return weapon.weaponDef.ComponentTags.Contains(DamageableWeaponTag, StringComparer.InvariantCultureIgnoreCase);
         }
 
         private const string JamMultiplierTagPrefix = "wr-jam_chance_multiplier";
@@ -195,7 +196,7 @@ namespace WeaponRealizer
             var rawTag = weapon.weaponDef.ComponentTags.First(tag =>
                 tag.StartsWith(JamMultiplierTagPrefix, StringComparison.InvariantCultureIgnoreCase));
             var multiplier =
-                rawTag == JamMultiplierTagPrefix
+                rawTag.Equals(JamMultiplierTagPrefix, StringComparison.InvariantCultureIgnoreCase)
                     ? Core.ModSettings.JamChanceMultiplier
                     : float.Parse(rawTag.Split(TagDelimiter, 3).Last());
             return multiplier;

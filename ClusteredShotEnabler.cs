@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using Harmony;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace WeaponRealizer
             {
                 _isClustered[weaponId] =
                     Core.ModSettings.ClusteredBallistics &&
-                    weapon.weaponDef.ComponentTags.Contains(ClusteredShotEnabler.CLUSTER_TAG);
+                    weapon.weaponDef.ComponentTags.Contains(ClusteredShotEnabler.CLUSTER_TAG, StringComparer.InvariantCultureIgnoreCase);
             }
             return _isClustered[weaponId];
         }
@@ -64,7 +65,7 @@ namespace WeaponRealizer
         static bool Prefix(ref WeaponHitInfo hitInfo, int groupIdx, int weaponIdx, Weapon weapon, float toHitChance,
             float prevDodgedDamage, AttackDirector.AttackSequence __instance)
         {
-            if (!weapon.weaponDef.ComponentTags.Contains(CLUSTER_TAG)) return true;
+            if (!weapon.weaponDef.ComponentTags.Contains(CLUSTER_TAG, StringComparer.InvariantCultureIgnoreCase)) return true;
             Logger.Debug("had the cluster tag");
             var newNumberOfShots = weapon.ProjectilesPerShot * hitInfo.numberOfShots;
             var originalNumberOfShots = hitInfo.numberOfShots;

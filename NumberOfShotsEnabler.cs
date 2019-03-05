@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using Harmony;
 
@@ -77,7 +78,7 @@ namespace WeaponRealizer
             {
                 _isClustered[effectId] =
                     Core.ModSettings.ClusteredBallistics &&
-                    effect.weapon.weaponDef.ComponentTags.Contains(ClusteredShotEnabler.CLUSTER_TAG);
+                    effect.weapon.weaponDef.ComponentTags.Contains(ClusteredShotEnabler.CLUSTER_TAG, StringComparer.InvariantCultureIgnoreCase);
             }
             return _isClustered[effectId];
         }
